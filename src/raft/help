@@ -1,0 +1,448 @@
+000014 INIT S0 created
+000020 INIT S1 created
+000021 INIT S2 created
+Test (2A): election after network failure ...
+008397 ELEC S0 start election
+008403 ELEC S0 request votes from 2, current term: 1
+008403 ELEC S0 request votes from 1, current term: 1
+008416 ELEC S1 vote to 0
+008418 ELEC S2 vote to 0
+008423 ELEC S0 is elected
+008424 HEAR S0 send heartbeat to 2, from log 1 to log 1
+008425 HEAR S0 send heartbeat to 1, from log 1 to log 1
+008428 APPD S1 receive appendentries from leader 0, add log from 1 to index 1
+008431 HEAR S0 heartbeat success from 1 nextLog 1
+008431 APPD S2 receive appendentries from leader 0, add log from 1 to index 1
+008432 HEAR S0 heartbeat success from 2 nextLog 1
+008806 HEAR S0 send heartbeat to 2, from log 1 to log 1
+008808 HEAR S0 send heartbeat to 1, from log 1 to log 1
+008811 APPD S2 receive appendentries from leader 0, add log from 1 to index 1
+008811 APPD S1 receive appendentries from leader 0, add log from 1 to index 1
+008812 HEAR S0 heartbeat success from 2 nextLog 1
+008813 HEAR S0 heartbeat success from 1 nextLog 1
+008947 COMM S0 update commitId to 0
+009159 HEAR S0 send heartbeat to 2, from log 1 to log 1
+009161 HEAR S0 send heartbeat to 1, from log 1 to log 1
+009164 APPD S1 receive appendentries from leader 0, add log from 1 to index 1
+009165 APPD S2 receive appendentries from leader 0, add log from 1 to index 1
+009166 HEAR S0 heartbeat success from 1 nextLog 1
+009166 HEAR S0 heartbeat success from 2 nextLog 1
+009724 HEAR S0 send heartbeat to 2, from log 1 to log 1
+009727 HEAR S0 send heartbeat to 1, from log 1 to log 1
+009732 APPD S2 receive appendentries from leader 0, add log from 1 to index 1
+009732 APPD S1 receive appendentries from leader 0, add log from 1 to index 1
+009733 HEAR S0 heartbeat success from 2 nextLog 1
+009734 HEAR S0 heartbeat success from 1 nextLog 1
+009830 COMM S0 update commitId to 0
+010443 COMM S0 update commitId to 0
+010505 HEAR S0 send heartbeat to 2, from log 1 to log 1
+010507 HEAR S0 send heartbeat to 1, from log 1 to log 1
+010512 APPD S1 receive appendentries from leader 0, add log from 1 to index 1
+010513 APPD S2 receive appendentries from leader 0, add log from 1 to index 1
+010514 HEAR S0 heartbeat success from 1 nextLog 1
+010514 HEAR S0 heartbeat success from 2 nextLog 1
+011006 COMM S0 update commitId to 0
+011125 HEAR S0 send heartbeat to 2, from log 1 to log 1
+011127 HEAR S0 send heartbeat to 1, from log 1 to log 1
+011529 COMM S0 update commitId to 0
+011876 HEAR S0 send heartbeat to 1, from log 1 to log 1
+011879 HEAR S0 send heartbeat to 2, from log 1 to log 1
+012448 HEAR S0 send heartbeat to 2, from log 1 to log 1
+012452 HEAR S0 send heartbeat to 1, from log 1 to log 1
+012899 HEAR S0 send heartbeat to 2, from log 1 to log 1
+012902 HEAR S0 send heartbeat to 1, from log 1 to log 1
+012923 COMM S0 update commitId to 0
+013491 HEAR S0 send heartbeat to 2, from log 1 to log 1
+013494 HEAR S0 send heartbeat to 1, from log 1 to log 1
+013765 COMM S0 update commitId to 0
+013872 HEAR S0 send heartbeat to 2, from log 1 to log 1
+013876 HEAR S0 send heartbeat to 1, from log 1 to log 1
+014384 HEAR S0 send heartbeat to 2, from log 1 to log 1
+014386 HEAR S0 send heartbeat to 1, from log 1 to log 1
+014767 COMM S0 update commitId to 0
+015023 HEAR S0 send heartbeat to 2, from log 1 to log 1
+015025 HEAR S0 send heartbeat to 1, from log 1 to log 1
+015059 NETF S0 try to send heartBeat but network fail
+015402 HEAR S0 send heartbeat to 2, from log 1 to log 1
+015405 HEAR S0 send heartbeat to 1, from log 1 to log 1
+016104 HEAR S0 send heartbeat to 2, from log 1 to log 1
+016106 HEAR S0 send heartbeat to 1, from log 1 to log 1
+016241 COMM S0 update commitId to 0
+016565 HEAR S0 send heartbeat to 2, from log 1 to log 1
+016567 HEAR S0 send heartbeat to 1, from log 1 to log 1
+016885 COMM S0 update commitId to 0
+017322 HEAR S0 send heartbeat to 2, from log 1 to log 1
+017325 HEAR S0 send heartbeat to 1, from log 1 to log 1
+017547 COMM S0 update commitId to 0
+017626 NETF S0 try to send heartBeat but network fail
+017897 HEAR S0 send heartbeat to 2, from log 1 to log 1
+017901 HEAR S0 send heartbeat to 1, from log 1 to log 1
+018220 HEAR S0 send heartbeat to 2, from log 1 to log 1
+018223 HEAR S0 send heartbeat to 1, from log 1 to log 1
+018270 COMM S0 update commitId to 0
+018621 HEAR S0 send heartbeat to 2, from log 1 to log 1
+018622 HEAR S0 send heartbeat to 1, from log 1 to log 1
+019281 HEAR S0 send heartbeat to 2, from log 1 to log 1
+019284 HEAR S0 send heartbeat to 1, from log 1 to log 1
+019486 ELEC S1 start election
+019488 ELEC S1 request votes from 2, current term: 2
+019488 ELEC S1 request votes from 0, current term: 2
+019492 ELEC S2 vote to 1
+019510 ELEC S1 is elected
+019512 HEAR S1 send heartbeat to 2, from log 1 to log 1
+019518 HEAR S1 send heartbeat to 0, from log 1 to log 1
+019518 APPD S2 receive appendentries from leader 1, add log from 1 to index 1
+019520 HEAR S1 heartbeat success from 2 nextLog 1
+019592 COMM S0 update commitId to 0
+019758 HEAR S0 send heartbeat to 2, from log 1 to log 1
+019760 HEAR S0 send heartbeat to 1, from log 1 to log 1
+019790 NETF S0 try to send heartBeat but network fail
+019833 COMM S1 update commitId to 0
+019984 HEAR S1 send heartbeat to 2, from log 1 to log 1
+019985 HEAR S1 send heartbeat to 0, from log 1 to log 1
+019990 APPD S2 receive appendentries from leader 1, add log from 1 to index 1
+019992 HEAR S1 heartbeat success from 2 nextLog 1
+020127 NETF S0 try to send heartBeat but network fail
+020396 HEAR S0 send heartbeat to 2, from log 1 to log 1
+020398 HEAR S0 send heartbeat to 1, from log 1 to log 1
+020506 COMM S1 update commitId to 0
+020567 HEAR S1 send heartbeat to 2, from log 1 to log 1
+020570 HEAR S1 send heartbeat to 0, from log 1 to log 1
+020571 APPD S2 receive appendentries from leader 1, add log from 1 to index 1
+020573 HEAR S1 heartbeat success from 2 nextLog 1
+020683 COMM S0 update commitId to 0
+020908 HEAR S0 send heartbeat to 2, from log 1 to log 1
+020909 HEAR S0 send heartbeat to 1, from log 1 to log 1
+020912 APPD S2 receive appendentries from leader 0, but currentTerm Larger
+020912 APPD S1 receive appendentries from leader 0, but currentTerm Larger
+020913 HEAR S0 heartbeat fail and updateTerm
+020914 HEAR S0 heartbeat fail and updateTerm
+021167 HEAR S1 send heartbeat to 2, from log 1 to log 1
+021169 HEAR S1 send heartbeat to 0, from log 1 to log 1
+021173 APPD S2 receive appendentries from leader 1, add log from 1 to index 1
+021173 APPD S0 receive appendentries from leader 1, add log from 1 to index 1
+021174 HEAR S1 heartbeat success from 2 nextLog 1
+021175 HEAR S1 heartbeat success from 0 nextLog 1
+021602 HEAR S1 send heartbeat to 2, from log 1 to log 1
+021604 HEAR S1 send heartbeat to 0, from log 1 to log 1
+021608 APPD S2 receive appendentries from leader 1, add log from 1 to index 1
+021608 APPD S0 receive appendentries from leader 1, add log from 1 to index 1
+021609 HEAR S1 heartbeat success from 2 nextLog 1
+021610 HEAR S1 heartbeat success from 0 nextLog 1
+021983 COMM S1 update commitId to 0
+022072 HEAR S1 send heartbeat to 2, from log 1 to log 1
+022074 HEAR S1 send heartbeat to 0, from log 1 to log 1
+022078 APPD S2 receive appendentries from leader 1, add log from 1 to index 1
+022078 APPD S0 receive appendentries from leader 1, add log from 1 to index 1
+022079 HEAR S1 heartbeat success from 2 nextLog 1
+022080 HEAR S1 heartbeat success from 0 nextLog 1
+022329 NETF S0 try to send heartBeat but network fail
+022542 HEAR S1 send heartbeat to 0, from log 1 to log 1
+022545 HEAR S1 send heartbeat to 2, from log 1 to log 1
+022549 APPD S2 receive appendentries from leader 1, add log from 1 to index 1
+022550 APPD S0 receive appendentries from leader 1, add log from 1 to index 1
+022550 HEAR S1 heartbeat success from 2 nextLog 1
+022551 HEAR S1 heartbeat success from 0 nextLog 1
+023233 HEAR S1 send heartbeat to 0, from log 1 to log 1
+023239 HEAR S1 send heartbeat to 2, from log 1 to log 1
+023242 APPD S0 receive appendentries from leader 1, add log from 1 to index 1
+023243 APPD S2 receive appendentries from leader 1, add log from 1 to index 1
+023243 HEAR S1 heartbeat success from 0 nextLog 1
+023244 HEAR S1 heartbeat success from 2 nextLog 1
+023309 COMM S1 update commitId to 0
+023314 NETF S0 try to send heartBeat but network fail
+023559 NETF S0 try to send heartBeat but network fail
+024001 COMM S1 update commitId to 0
+024004 HEAR S1 send heartbeat to 2, from log 1 to log 1
+024006 HEAR S1 send heartbeat to 0, from log 1 to log 1
+024011 APPD S0 receive appendentries from leader 1, add log from 1 to index 1
+024012 APPD S2 receive appendentries from leader 1, add log from 1 to index 1
+024013 HEAR S1 heartbeat success from 0 nextLog 1
+024014 HEAR S1 heartbeat success from 2 nextLog 1
+024713 HEAR S1 send heartbeat to 2, from log 1 to log 1
+024737 HEAR S1 send heartbeat to 0, from log 1 to log 1
+024740 APPD S2 receive appendentries from leader 1, add log from 1 to index 1
+024740 APPD S0 receive appendentries from leader 1, add log from 1 to index 1
+024741 HEAR S1 heartbeat success from 2 nextLog 1
+024741 HEAR S1 heartbeat success from 0 nextLog 1
+024808 COMM S1 update commitId to 0
+025171 NETF S1 try to send heartBeat but network fail
+025363 HEAR S1 send heartbeat to 2, from log 1 to log 1
+025367 APPD S2 receive appendentries from leader 1, add log from 1 to index 1
+025368 HEAR S1 send heartbeat to 0, from log 1 to log 1
+025370 HEAR S1 heartbeat success from 2 nextLog 1
+025371 APPD S0 receive appendentries from leader 1, add log from 1 to index 1
+025372 HEAR S1 heartbeat success from 0 nextLog 1
+025440 COMM S1 update commitId to 0
+025954 HEAR S1 send heartbeat to 2, from log 1 to log 1
+025959 HEAR S1 send heartbeat to 0, from log 1 to log 1
+025964 APPD S2 receive appendentries from leader 1, add log from 1 to index 1
+025966 HEAR S1 heartbeat success from 2 nextLog 1
+025968 APPD S0 receive appendentries from leader 1, add log from 1 to index 1
+025970 HEAR S1 heartbeat success from 0 nextLog 1
+026071 NETF S0 try to send heartBeat but network fail
+026170 COMM S1 update commitId to 0
+026545 HEAR S1 send heartbeat to 2, from log 1 to log 1
+026547 HEAR S1 send heartbeat to 0, from log 1 to log 1
+026891 COMM S1 update commitId to 0
+027316 HEAR S1 send heartbeat to 2, from log 1 to log 1
+027319 HEAR S1 send heartbeat to 0, from log 1 to log 1
+027779 HEAR S1 send heartbeat to 2, from log 1 to log 1
+027781 HEAR S1 send heartbeat to 0, from log 1 to log 1
+028290 HEAR S1 send heartbeat to 2, from log 1 to log 1
+028291 HEAR S1 send heartbeat to 0, from log 1 to log 1
+028393 COMM S1 update commitId to 0
+029002 HEAR S1 send heartbeat to 2, from log 1 to log 1
+029004 HEAR S1 send heartbeat to 0, from log 1 to log 1
+029124 COMM S1 update commitId to 0
+029302 HEAR S1 send heartbeat to 2, from log 1 to log 1
+029303 HEAR S1 send heartbeat to 0, from log 1 to log 1
+029773 HEAR S1 send heartbeat to 2, from log 1 to log 1
+029775 HEAR S1 send heartbeat to 0, from log 1 to log 1
+030184 HEAR S1 send heartbeat to 2, from log 1 to log 1
+030186 HEAR S1 send heartbeat to 0, from log 1 to log 1
+030546 COMM S1 update commitId to 0
+030866 HEAR S1 send heartbeat to 2, from log 1 to log 1
+030868 HEAR S1 send heartbeat to 0, from log 1 to log 1
+031318 HEAR S1 send heartbeat to 2, from log 1 to log 1
+031320 HEAR S1 send heartbeat to 0, from log 1 to log 1
+031659 NETF S1 try to send heartBeat but network fail
+031789 HEAR S1 send heartbeat to 2, from log 1 to log 1
+031792 HEAR S1 send heartbeat to 0, from log 1 to log 1
+031964 COMM S1 update commitId to 0
+032513 HEAR S1 send heartbeat to 2, from log 1 to log 1
+032515 HEAR S1 send heartbeat to 0, from log 1 to log 1
+032526 COMM S1 update commitId to 0
+032934 HEAR S1 send heartbeat to 2, from log 1 to log 1
+032936 HEAR S1 send heartbeat to 0, from log 1 to log 1
+033307 COMM S1 update commitId to 0
+033531 NETF S1 try to send heartBeat but network fail
+033558 HEAR S1 send heartbeat to 2, from log 1 to log 1
+033562 HEAR S1 send heartbeat to 0, from log 1 to log 1
+033700 ELEC S0 start election
+033703 ELEC S0 request votes from 2, current term: 3
+033706 ELEC S0 request votes from 1, current term: 3
+034039 HEAR S1 send heartbeat to 0, from log 1 to log 1
+034044 HEAR S1 send heartbeat to 2, from log 1 to log 1
+034470 HEAR S1 send heartbeat to 2, from log 1 to log 1
+034472 HEAR S1 send heartbeat to 0, from log 1 to log 1
+034710 COMM S1 update commitId to 0
+034801 HEAR S1 send heartbeat to 2, from log 1 to log 1
+034803 HEAR S1 send heartbeat to 0, from log 1 to log 1
+035270 NETF S1 try to send heartBeat but network fail
+035431 HEAR S1 send heartbeat to 2, from log 1 to log 1
+035435 HEAR S1 send heartbeat to 0, from log 1 to log 1
+035472 COMM S1 update commitId to 0
+035993 ELEC S2 start election
+035995 ELEC S2 request votes from 1, current term: 3
+035996 ELEC S2 request votes from 0, current term: 3
+036193 HEAR S1 send heartbeat to 2, from log 1 to log 1
+036194 HEAR S1 send heartbeat to 0, from log 1 to log 1
+036835 HEAR S1 send heartbeat to 2, from log 1 to log 1
+036838 HEAR S1 send heartbeat to 0, from log 1 to log 1
+036923 COMM S1 update commitId to 0
+037287 HEAR S1 send heartbeat to 2, from log 1 to log 1
+037289 HEAR S1 send heartbeat to 0, from log 1 to log 1
+037728 HEAR S1 send heartbeat to 2, from log 1 to log 1
+037730 HEAR S1 send heartbeat to 0, from log 1 to log 1
+037903 COMM S1 update commitId to 0
+038258 HEAR S1 send heartbeat to 2, from log 1 to log 1
+038259 HEAR S1 send heartbeat to 0, from log 1 to log 1
+038291 NETF S0 try to send heartBeat but network fail
+038959 HEAR S1 send heartbeat to 2, from log 1 to log 1
+038962 HEAR S1 send heartbeat to 0, from log 1 to log 1
+039335 COMM S1 update commitId to 0
+039621 HEAR S1 send heartbeat to 2, from log 1 to log 1
+039623 HEAR S1 send heartbeat to 0, from log 1 to log 1
+040103 HEAR S1 send heartbeat to 2, from log 1 to log 1
+040105 HEAR S1 send heartbeat to 0, from log 1 to log 1
+040413 HEAR S1 send heartbeat to 2, from log 1 to log 1
+040415 HEAR S1 send heartbeat to 0, from log 1 to log 1
+040627 ELEC S0 start election
+040628 ELEC S0 request votes from 2, current term: 4
+040628 ELEC S0 request votes from 1, current term: 4
+040677 COMM S1 update commitId to 0
+040958 HEAR S1 send heartbeat to 2, from log 1 to log 1
+040961 HEAR S1 send heartbeat to 0, from log 1 to log 1
+041003 NETF S1 try to send heartBeat but network fail
+041071 NETF S0 try to send heartBeat but network fail
+041720 HEAR S1 send heartbeat to 2, from log 1 to log 1
+041723 HEAR S1 send heartbeat to 0, from log 1 to log 1
+041808 NETF S0 try to send heartBeat but network fail
+042048 COMM S1 update commitId to 0
+042195 NETF S1 try to send heartBeat but network fail
+042341 HEAR S1 send heartbeat to 2, from log 1 to log 1
+042343 HEAR S1 send heartbeat to 0, from log 1 to log 1
+042912 HEAR S1 send heartbeat to 0, from log 1 to log 1
+042914 HEAR S1 send heartbeat to 2, from log 1 to log 1
+043195 NETF S0 try to send heartBeat but network fail
+043242 HEAR S1 send heartbeat to 2, from log 1 to log 1
+043244 HEAR S1 send heartbeat to 0, from log 1 to log 1
+043271 COMM S1 update commitId to 0
+043546 NETF S0 try to send heartBeat but network fail
+043735 NETF S1 try to send heartBeat but network fail
+043895 HEAR S1 send heartbeat to 2, from log 1 to log 1
+043897 HEAR S1 send heartbeat to 0, from log 1 to log 1
+043901 COMM S1 update commitId to 0
+044507 HEAR S1 send heartbeat to 2, from log 1 to log 1
+044510 HEAR S1 send heartbeat to 0, from log 1 to log 1
+044526 NETF S1 try to send heartBeat but network fail
+044552 COMM S1 update commitId to 0
+044848 HEAR S1 send heartbeat to 2, from log 1 to log 1
+044849 HEAR S1 send heartbeat to 0, from log 1 to log 1
+044928 NETF S1 try to send heartBeat but network fail
+045210 HEAR S1 send heartbeat to 2, from log 1 to log 1
+045215 HEAR S1 send heartbeat to 0, from log 1 to log 1
+045482 COMM S1 update commitId to 0
+045551 HEAR S1 send heartbeat to 2, from log 1 to log 1
+045553 HEAR S1 send heartbeat to 0, from log 1 to log 1
+045636 NETF S0 try to send heartBeat but network fail
+046203 HEAR S1 send heartbeat to 2, from log 1 to log 1
+046205 HEAR S1 send heartbeat to 0, from log 1 to log 1
+046253 NETF S1 try to send heartBeat but network fail
+046259 NETF S1 try to send heartBeat but network fail
+046264 COMM S1 update commitId to 0
+046523 ELEC S2 start election
+046526 ELEC S2 request votes from 1, current term: 4
+046527 ELEC S2 request votes from 0, current term: 4
+046532 ELEC S0 reject vote because this term has voted
+046653 HEAR S1 send heartbeat to 2, from log 1 to log 1
+046654 HEAR S1 send heartbeat to 0, from log 1 to log 1
+047191 NETF S1 try to send heartBeat but network fail
+047343 HEAR S1 send heartbeat to 2, from log 1 to log 1
+047345 HEAR S1 send heartbeat to 0, from log 1 to log 1
+047386 NETF S0 try to send heartBeat but network fail
+047557 NETF S1 try to send heartBeat but network fail
+047658 COMM S1 update commitId to 0
+047724 HEAR S1 send heartbeat to 2, from log 1 to log 1
+047726 HEAR S1 send heartbeat to 0, from log 1 to log 1
+048038 NETF S1 try to send heartBeat but network fail
+048055 NETF S0 try to send heartBeat but network fail
+048193 NETF S0 try to send heartBeat but network fail
+048316 HEAR S1 send heartbeat to 2, from log 1 to log 1
+048318 HEAR S1 send heartbeat to 0, from log 1 to log 1
+048614 NETF S1 try to send heartBeat but network fail
+048657 ELEC S0 start election
+048659 ELEC S0 request votes from 2, current term: 5
+048660 ELEC S0 request votes from 1, current term: 5
+048663 ELEC S2 vote to 0
+048680 ELEC S0 is elected
+048685 HEAR S0 send heartbeat to 2, from log 1 to log 1
+048685 HEAR S0 send heartbeat to 1, from log 1 to log 1
+048687 APPD S2 receive appendentries from leader 0, add log from 1 to index 1
+048689 HEAR S0 heartbeat success from 2 nextLog 1
+048737 HEAR S1 send heartbeat to 2, from log 1 to log 1
+048738 HEAR S1 send heartbeat to 0, from log 1 to log 1
+048747 NETF S1 try to send heartBeat but network fail
+048793 COMM S0 update commitId to 0
+048846 NETF S0 try to send heartBeat but network fail
+049015 NETF S1 try to send heartBeat but network fail
+049030 COMM S1 update commitId to 0
+049172 HEAR S0 send heartbeat to 2, from log 1 to log 1
+049176 HEAR S0 send heartbeat to 1, from log 1 to log 1
+049179 APPD S2 receive appendentries from leader 0, add log from 1 to index 1
+049181 HEAR S0 heartbeat success from 2 nextLog 1
+049286 NETF S1 try to send heartBeat but network fail
+049486 HEAR S1 send heartbeat to 2, from log 1 to log 1
+049488 HEAR S1 send heartbeat to 0, from log 1 to log 1
+049944 HEAR S0 send heartbeat to 2, from log 1 to log 1
+049953 APPD S2 receive appendentries from leader 0, add log from 1 to index 1
+049954 HEAR S0 heartbeat success from 2 nextLog 1
+049954 HEAR S0 send heartbeat to 1, from log 1 to log 1
+050045 NETF S1 try to send heartBeat but network fail
+050178 COMM S0 update commitId to 0
+050229 HEAR S1 send heartbeat to 2, from log 1 to log 1
+050230 HEAR S1 send heartbeat to 0, from log 1 to log 1
+050233 COMM S1 update commitId to 0
+050254 NETF S1 try to send heartBeat but network fail
+050576 NETF S1 try to send heartBeat but network fail
+050605 HEAR S0 send heartbeat to 2, from log 1 to log 1
+050606 HEAR S0 send heartbeat to 1, from log 1 to log 1
+050611 APPD S2 receive appendentries from leader 0, add log from 1 to index 1
+050614 HEAR S0 heartbeat success from 2 nextLog 1
+050882 HEAR S1 send heartbeat to 2, from log 1 to log 1
+050883 HEAR S1 send heartbeat to 0, from log 1 to log 1
+050926 HEAR S0 send heartbeat to 2, from log 1 to log 1
+050927 HEAR S0 send heartbeat to 1, from log 1 to log 1
+050930 APPD S2 receive appendentries from leader 0, add log from 1 to index 1
+050931 HEAR S0 heartbeat success from 2 nextLog 1
+051004 COMM S1 update commitId to 0
+051461 NETF S1 try to send heartBeat but network fail
+051492 HEAR S1 send heartbeat to 2, from log 1 to log 1
+051493 HEAR S1 send heartbeat to 0, from log 1 to log 1
+051523 COMM S0 update commitId to 0
+051619 HEAR S0 send heartbeat to 2, from log 1 to log 1
+051626 APPD S2 receive appendentries from leader 0, add log from 1 to index 1
+051627 HEAR S0 heartbeat success from 2 nextLog 1
+051628 HEAR S0 send heartbeat to 1, from log 1 to log 1
+051631 APPD S1 receive appendentries from leader 0, add log from 1 to index 1
+051632 HEAR S0 heartbeat success from 1 nextLog 1
+051811 NETF S1 try to send heartBeat but network fail
+052220 HEAR S0 send heartbeat to 2, from log 1 to log 1
+052222 HEAR S0 send heartbeat to 1, from log 1 to log 1
+052227 APPD S1 receive appendentries from leader 0, add log from 1 to index 1
+052229 APPD S2 receive appendentries from leader 0, add log from 1 to index 1
+052229 HEAR S0 heartbeat success from 1 nextLog 1
+052231 HEAR S0 heartbeat success from 2 nextLog 1
+052713 COMM S0 update commitId to 0
+052891 HEAR S0 send heartbeat to 2, from log 1 to log 1
+052892 HEAR S0 send heartbeat to 1, from log 1 to log 1
+052896 APPD S1 receive appendentries from leader 0, add log from 1 to index 1
+052897 APPD S2 receive appendentries from leader 0, add log from 1 to index 1
+052897 HEAR S0 heartbeat success from 1 nextLog 1
+052898 HEAR S0 heartbeat success from 2 nextLog 1
+053292 HEAR S0 send heartbeat to 2, from log 1 to log 1
+053298 APPD S2 receive appendentries from leader 0, add log from 1 to index 1
+053299 HEAR S0 heartbeat success from 2 nextLog 1
+053299 HEAR S0 send heartbeat to 1, from log 1 to log 1
+053302 APPD S1 receive appendentries from leader 0, add log from 1 to index 1
+053303 HEAR S0 heartbeat success from 1 nextLog 1
+053629 NETF S1 try to send heartBeat but network fail
+053893 HEAR S0 send heartbeat to 2, from log 1 to log 1
+053895 HEAR S0 send heartbeat to 1, from log 1 to log 1
+053897 APPD S2 receive appendentries from leader 0, add log from 1 to index 1
+053898 APPD S1 receive appendentries from leader 0, add log from 1 to index 1
+053898 HEAR S0 heartbeat success from 2 nextLog 1
+053900 HEAR S0 heartbeat success from 1 nextLog 1
+054046 COMM S0 update commitId to 0
+054196 HEAR S0 send heartbeat to 2, from log 1 to log 1
+054199 HEAR S0 send heartbeat to 1, from log 1 to log 1
+054202 APPD S1 receive appendentries from leader 0, add log from 1 to index 1
+054204 HEAR S0 heartbeat success from 1 nextLog 1
+054207 APPD S2 receive appendentries from leader 0, add log from 1 to index 1
+054208 HEAR S0 heartbeat success from 2 nextLog 1
+054508 HEAR S0 send heartbeat to 1, from log 1 to log 1
+054510 HEAR S0 send heartbeat to 2, from log 1 to log 1
+054515 APPD S2 receive appendentries from leader 0, add log from 1 to index 1
+054515 APPD S1 receive appendentries from leader 0, add log from 1 to index 1
+054516 HEAR S0 heartbeat success from 2 nextLog 1
+054516 HEAR S0 heartbeat success from 1 nextLog 1
+054678 COMM S0 update commitId to 0
+054947 NETF S1 try to send heartBeat but network fail
+055148 NETF S1 try to send heartBeat but network fail
+055302 HEAR S0 send heartbeat to 2, from log 1 to log 1
+055304 HEAR S0 send heartbeat to 1, from log 1 to log 1
+055308 APPD S2 receive appendentries from leader 0, add log from 1 to index 1
+055308 APPD S1 receive appendentries from leader 0, add log from 1 to index 1
+055309 HEAR S0 heartbeat success from 2 nextLog 1
+055310 HEAR S0 heartbeat success from 1 nextLog 1
+055490 COMM S0 update commitId to 0
+055726 NETF S0 try to send heartBeat but network fail
+055923 HEAR S0 send heartbeat to 2, from log 1 to log 1
+055927 HEAR S0 send heartbeat to 1, from log 1 to log 1
+055928 APPD S2 receive appendentries from leader 0, add log from 1 to index 1
+055930 HEAR S0 heartbeat success from 2 nextLog 1
+055931 APPD S1 receive appendentries from leader 0, add log from 1 to index 1
+055932 HEAR S0 heartbeat success from 1 nextLog 1
+056169 NETF S0 try to send heartBeat but network fail
+056599 NETF S1 try to send heartBeat but network fail
+056723 HEAR S0 send heartbeat to 2, from log 1 to log 1
+056724 HEAR S0 send heartbeat to 1, from log 1 to log 1
+056727 APPD S1 receive appendentries from leader 0, add log from 1 to index 1
+056728 APPD S2 receive appendentries from leader 0, add log from 1 to index 1
+056729 HEAR S0 heartbeat success from 1 nextLog 1
+056729 HEAR S0 heartbeat success from 2 nextLog 1
+056909 COMM S0 update commitId to 0
+  ... Passed --   5.7  3  210   45042    0
+PASS
+ok  	6.5840/raft	7.612s
