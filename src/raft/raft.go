@@ -18,6 +18,8 @@ package raft
 //
 
 import (
+	"6.5840/labgob"
+	"bytes"
 	//	"bytes"
 	"math/rand"
 	"sync"
@@ -99,12 +101,14 @@ func (rf *Raft) generateElapsedTime() {
 
 func (rf *Raft) updateTerm(term int) {
 	if term > rf.peerInfo.CurrentTerm {
+		Debug(dPersist, "S%d term change from %d to %d, and persist", rf.me, rf.peerInfo.CurrentTerm, term)
 		rf.peerInfo.CurrentTerm = term
 		rf.peerInfo.VotedFor = -1
 		if rf.isLeader {
 			rf.generateElapsedTime()
 			rf.isLeader = false
 		}
+		rf.persist()
 	}
 }
 
@@ -130,32 +134,53 @@ func (rf *Raft) GetState() (int, bool) {
 func (rf *Raft) persist() {
 	// Your code here (2C).
 	// Example:
-	// w := new(bytes.Buffer)
-	// e := labgob.NewEncoder(w)
-	// e.Encode(rf.xxx)
-	// e.Encode(rf.yyy)
-	// raftstate := w.Bytes()
-	// rf.persister.Save(raftstate, nil)
+	//rf.mu.Lock()
+	//defer rf.mu.Unlock()
+	w := new(bytes.Buffer)
+	e := labgob.NewEncoder(w)
+	err := e.Encode(rf.peerInfo.CurrentTerm)
+	if err != nil {
+		Debug(dPersist, "S%d persist term error", rf.me)
+		return
+	}
+	err = e.Encode(rf.peerInfo.VotedFor)
+	if err != nil {
+		Debug(dPersist, "S%d persist votedfor error", rf.me)
+		return
+	}
+
+	err = e.Encode(rf.log)
+	if err != nil {
+		Debug(dPersist, "S%d persist log error", rf.me)
+		return
+	}
+	raftState := w.Bytes()
+	rf.persister.Save(raftState, nil)
+	Debug(dPersist, "S%d persist term: %d votefor: %d logLen: %d", rf.me, rf.peerInfo.CurrentTerm, rf.peerInfo.VotedFor, len(rf.log))
 }
 
 // restore previously persisted state.
 func (rf *Raft) readPersist(data []byte) {
+	//rf.mu.Lock()
+	//rf.mu.Unlock()
 	if data == nil || len(data) < 1 { // bootstrap without any state?
 		return
 	}
 	// Your code here (2C).
 	// Example:
-	// r := bytes.NewBuffer(data)
-	// d := labgob.NewDecoder(r)
-	// var xxx
-	// var yyy
-	// if d.Decode(&xxx) != nil ||
-	//    d.Decode(&yyy) != nil {
-	//   error...
-	// } else {
-	//   rf.xxx = xxx
-	//   rf.yyy = yyy
-	// }
+	r := bytes.NewBuffer(data)
+	d := labgob.NewDecoder(r)
+	var currentTerm int
+	var votedFor int
+	var entry []Entry
+	if d.Decode(&currentTerm) != nil ||
+		d.Decode(&votedFor) != nil || d.Decode(&entry) != nil {
+		Debug(dPersist, "S%d decode error", rf.me)
+	} else {
+		rf.peerInfo.CurrentTerm = currentTerm
+		rf.peerInfo.VotedFor = votedFor
+		rf.log = entry
+	}
 }
 
 // the service says it has created a snapshot that has
@@ -201,6 +226,9 @@ type AppendEntriesArgs struct {
 
 type AppendEntriesReply struct {
 	Term    int
+	XTerm   int
+	XIndex  int
+	XLen    int
 	Success bool
 }
 
@@ -237,9 +265,10 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 			reply.VoteGranted = false
 			return
 		}
-		Debug(dElection, "S%d vote to %d", rf.me, args.CandidateId)
 		rf.peerInfo.VotedFor = args.CandidateId
 		reply.VoteGranted = true
+		Debug(dElection, "S%d vote to %d", rf.me, args.CandidateId)
+		rf.persist()
 		return
 	}
 }
@@ -261,21 +290,48 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	}
 	// 如果prevLogIndex匹配不了返回false
 	rf.generateElapsedTime()
-	if len(rf.log)-1 < args.PrevLogIndex || rf.log[args.PrevLogIndex].Term != args.PrevLogTerm {
-		Debug(dAppend, "S%d receive appendentries from leader %d, but log not match", rf.me, args.LeaderId)
+	if len(rf.log)-1 < args.PrevLogIndex {
+		Debug(dAppend, "S%d receive appendentries from leader %d, but log too short", rf.me, args.LeaderId)
+		reply.XIndex = -1
+		reply.XTerm = -1
+		reply.XLen = args.PrevLogIndex - len(rf.log) + 1
+		reply.Success = false
+		return
+	}
+
+	if rf.log[args.PrevLogIndex].Term != args.PrevLogTerm {
+		Debug(dAppend, "S%d receive appendentries from leader %d, but log term not same", rf.me, args.LeaderId)
+		i := args.PrevLogIndex
+		iTerm := rf.log[args.PrevLogIndex].Term
+		for ; rf.log[i].Term == iTerm; i-- {
+		}
+		reply.XIndex = i + 1
+		reply.XTerm = iTerm
 		reply.Success = false
 		return
 	}
 
 	reply.Success = true
-	rf.log = rf.log[0 : args.PrevLogIndex+1]
-	rf.log = append(rf.log, args.Entries...)
+
+	// 如果prevEntry匹配，向后找到第一个不匹配的Index，然后把值给拼上去
+	index := args.PrevLogIndex
+	i := 0
+	for ; i < len(args.Entries) && i+1+index < len(rf.log) && rf.log[index+1+i] == args.Entries[i]; i++ {
+	}
+	rf.log = rf.log[0 : index+1+i]
+	appendEn := args.Entries[i:]
+	rf.log = append(rf.log, appendEn...)
+	if len(appendEn) != 0 {
+		rf.persist()
+		Debug(dPersist, "S%d follower log append, and persist", rf.me)
+	}
 	Debug(dAppend, "S%d receive appendentries from leader %d, add log from %d to index %d", rf.me, args.LeaderId, args.PrevLogIndex+1, len(rf.log))
 	if len(rf.log) < args.LeaderCommit {
 		rf.commitIndex = len(rf.log)
 	} else {
 		rf.commitIndex = args.LeaderCommit
 	}
+
 }
 
 // example code to send a RequestVote RPC to a server.
@@ -361,8 +417,9 @@ func (rf *Raft) sendOneHeartBeat(currentTerm int, i int) {
 		rf.mu.Lock()
 		if reply.Success {
 			lens := request.PrevLogIndex + len(request.Entries)
-			rf.leaderInfo.nextIndex[i] = lens + 1
-			rf.leaderInfo.matchIndex[i] = lens
+			// 这里
+			rf.leaderInfo.nextIndex[i] = max(lens+1, rf.leaderInfo.nextIndex[i])
+			rf.leaderInfo.matchIndex[i] = max(lens, rf.leaderInfo.matchIndex[i])
 			Debug(dHeartBeat, "S%d heartbeat success from %d nextLog %d", rf.me, i, lens+1)
 		} else {
 			if reply.Term > currentTerm {
@@ -370,8 +427,18 @@ func (rf *Raft) sendOneHeartBeat(currentTerm int, i int) {
 				rf.updateTerm(reply.Term)
 			} else {
 				// todo continue
-				Debug(dHeartBeat, "S%d heartbeat success but log not match ", rf.me)
-				rf.leaderInfo.nextIndex[i]--
+
+				// 有可能出现网络延迟消息滞留导致nextIndex减到-1
+				if reply.XLen != 0 {
+					Debug(dHeartBeat, "S%d heartbeat success but prevlog not exist ", rf.me)
+					rf.leaderInfo.nextIndex[i] = max(rf.leaderInfo.nextIndex[i]-reply.XLen, rf.leaderInfo.matchIndex[i]+1)
+				} else {
+					Debug(dHeartBeat, "S%d heartbeat success but prevlog not match ", rf.me)
+					j := reply.XIndex
+					for ; rf.log[j].Term == reply.XTerm; j++ {
+					}
+					rf.leaderInfo.nextIndex[i] = max(j, rf.leaderInfo.matchIndex[i]+1)
+				}
 				go rf.sendOneHeartBeat(currentTerm, i)
 			}
 		}
@@ -420,6 +487,8 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
 	Term := rf.peerInfo.CurrentTerm
 	entry := Entry{Term, index, command}
 	rf.log = append(rf.log, entry)
+	Debug(dPersist, "S%d leader receive log, and persist", rf.me)
+	rf.persist()
 	Debug(dClientAdd, "S%d receive msg from client, add at index %d", rf.me, len(rf.log)-1)
 	// Your code here (2B).
 	return index, Term, true
@@ -478,6 +547,8 @@ func (rf *Raft) voteToSelfAndRequestForVote() {
 	rf.generateElapsedTime()
 	rf.peerInfo.CurrentTerm++
 	rf.peerInfo.VotedFor = rf.me
+	Debug(dPersist, "S%d currentTerm++ to %d, persist", rf.me, rf.peerInfo.CurrentTerm)
+	rf.persist()
 	count := 1
 	currentTerm := rf.peerInfo.CurrentTerm
 	// log := rf.log
@@ -526,6 +597,7 @@ func (rf *Raft) voteToSelfAndRequestForVote() {
 	rf.mu.Unlock()
 }
 
+// need to lock before use
 func (rf *Raft) convertToLeader() {
 	Debug(dElection, "S%d is elected", rf.me)
 	rf.isLeader = true
@@ -552,7 +624,10 @@ func (rf *Raft) sendApply(ch chan ApplyMsg) {
 					}
 				}
 				if count >= (l)/2 {
-					m = i
+					// 注意只能提交当前term的Index
+					if rf.peerInfo.CurrentTerm == rf.log[i].Term {
+						m = i
+					}
 				} else {
 					break
 				}
@@ -568,7 +643,6 @@ func (rf *Raft) sendApply(ch chan ApplyMsg) {
 			msg.Command = rf.log[rf.lastApplied].Command
 			Debug(dCOMMITUPDATE, "S%d send message Index at %d to client", rf.me, rf.lastApplied)
 			ch <- msg
-
 		}
 		rf.mu.Unlock()
 		// ms := 10
@@ -599,7 +673,6 @@ func Make(peers []*labrpc.ClientEnd, me int,
 	// start ticker goroutine to start elections
 	// 第零个位置放一个虚拟节点
 	rf.peerNum = len(rf.peers)
-	rf.readPersist(persister.ReadRaftState())
 	pi := &PeerInfo{0, 0}
 	rf.peerInfo = pi
 	rf.generateElapsedTime()
@@ -607,9 +680,9 @@ func Make(peers []*labrpc.ClientEnd, me int,
 	rf.log = append(rf.log, Entry{0, 0, nil})
 	leaderInfo := LeaderInfo{nil, nil}
 	rf.leaderInfo = leaderInfo
-	Debug(dINIT, "S%d created", rf.me)
+	rf.readPersist(persister.ReadRaftState())
+	Debug(dINIT, "S%d created, currenterm : %d, votefor: %d, logLen: %d", rf.me, rf.peerInfo.CurrentTerm, rf.peerInfo.VotedFor, len(rf.log))
 	go rf.checkTimeOutAndTryToBeLeader()
 	go rf.sendApply(applyCh)
-
 	return rf
 }
