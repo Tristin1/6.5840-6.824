@@ -25,7 +25,7 @@ TOPICS = {
     "LOG2": "#398280",
     "CMIT": "#98719f",
     "PERS": "#d08341",
-    "SNAP": "#FD971F",
+    "SNAP": "#fe2626",
     "DROP": "#ff615c",
     "CLNT": "#00813c",
     "TEST": "#fe2c79",
@@ -33,6 +33,7 @@ TOPICS = {
     "WARN": "#d08341",
     "ERRO": "#fe2626",
     "TRCE": "#fe2626",
+    "NETF": "#fe2626",
 }
 # fmt: on
 
