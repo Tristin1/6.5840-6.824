@@ -58,6 +58,14 @@ func check_same_config(t *testing.T, c1 Config, c2 Config) {
 		t.Fatalf("Num wrong")
 	}
 	if c1.Shards != c2.Shards {
+		for _, value := range c1.Shards {
+			print(value, " ")
+		}
+		println()
+		for _, value := range c2.Shards {
+			print(value, " ")
+		}
+		println()
 		t.Fatalf("Shards wrong")
 	}
 	if len(c1.Groups) != len(c2.Groups) {
@@ -379,7 +387,7 @@ func TestMulti(t *testing.T) {
 
 	fmt.Printf("  ... Passed\n")
 
-	fmt.Printf("Test: Check Same config on servers ...\n")
+	fmt.Printf("Test: Check Same Config on servers ...\n")
 
 	isLeader, leader := cfg.Leader()
 	if !isLeader {

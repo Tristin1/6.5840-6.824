@@ -37,14 +37,14 @@ func main() {
 	//
 	intermediate := []mr.KeyValue{}
 	for _, filename := range os.Args[2:] {
-		fmt.Println(filename)
+		// fmt.Println(filename)
 		file, err := os.Open(filename)
 		if err != nil {
-			log.Fatalf("cannot open %v", filename)
+			log.Fatalf("mresequential cannot open %v", filename)
 		}
 		content, err := ioutil.ReadAll(file)
 		if err != nil {
-			log.Fatalf("cannot read %v", filename)
+			log.Fatalf("mresequen cannot read %v", filename)
 		}
 		file.Close()
 		kva := mapf(filename, string(content))

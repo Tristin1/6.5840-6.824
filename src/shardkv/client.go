@@ -38,6 +38,8 @@ type Clerk struct {
 	config   shardctrler.Config
 	make_end func(string) *labrpc.ClientEnd
 	// You will have to modify this struct.
+	clientId int64
+	seqNum   int
 }
 
 // the tester calls MakeClerk.
@@ -45,13 +47,14 @@ type Clerk struct {
 // ctrlers[] is needed to call shardctrler.MakeClerk().
 //
 // make_end(servername) turns a server name from a
-// Config.Groups[gid][i] into a labrpc.ClientEnd on which you can
+// Config.Groups[Gid][i] into a labrpc.ClientEnd on which you can
 // send RPCs.
 func MakeClerk(ctrlers []*labrpc.ClientEnd, make_end func(string) *labrpc.ClientEnd) *Clerk {
 	ck := new(Clerk)
 	ck.sm = shardctrler.MakeClerk(ctrlers)
 	ck.make_end = make_end
 	// You'll have to add code here.
+	ck.clientId = nrand()
 	return ck
 }
 
@@ -62,9 +65,12 @@ func MakeClerk(ctrlers []*labrpc.ClientEnd, make_end func(string) *labrpc.Client
 func (ck *Clerk) Get(key string) string {
 	args := GetArgs{}
 	args.Key = key
-
+	ck.seqNum++
+	args.ClientId = ck.clientId
 	for {
+		args.SeqNum = ck.seqNum
 		shard := key2shard(key)
+		args.ShardId = shard
 		gid := ck.config.Shards[shard]
 		if servers, ok := ck.config.Groups[gid]; ok {
 			// try each server for the shard.
@@ -76,6 +82,7 @@ func (ck *Clerk) Get(key string) string {
 					return reply.Value
 				}
 				if ok && (reply.Err == ErrWrongGroup) {
+					//ck.seqNum++
 					break
 				}
 				// ... not ok, or ErrWrongLeader
@@ -96,10 +103,12 @@ func (ck *Clerk) PutAppend(key string, value string, op string) {
 	args.Key = key
 	args.Value = value
 	args.Op = op
-
-
+	ck.seqNum++
+	args.ClientId = ck.clientId
 	for {
+		args.SeqNum = ck.seqNum
 		shard := key2shard(key)
+		args.ShardId = shard
 		gid := ck.config.Shards[shard]
 		if servers, ok := ck.config.Groups[gid]; ok {
 			for si := 0; si < len(servers); si++ {
@@ -110,9 +119,9 @@ func (ck *Clerk) PutAppend(key string, value string, op string) {
 					return
 				}
 				if ok && reply.Err == ErrWrongGroup {
+					//ck.seqNum++
 					break
 				}
-				// ... not ok, or ErrWrongLeader
 			}
 		}
 		time.Sleep(100 * time.Millisecond)
@@ -122,8 +131,8 @@ func (ck *Clerk) PutAppend(key string, value string, op string) {
 }
 
 func (ck *Clerk) Put(key string, value string) {
-	ck.PutAppend(key, value, "Put")
+	ck.PutAppend(key, value, AddStr)
 }
 func (ck *Clerk) Append(key string, value string) {
-	ck.PutAppend(key, value, "Append")
+	ck.PutAppend(key, value, AppendStr)
 }

@@ -1,4 +1,4 @@
-package shardkv
+package shardctrler
 
 import (
 	"fmt"
@@ -42,7 +42,7 @@ const (
 	dTimer         logTopic = "TIMR"
 	dTrace         logTopic = "TRCE"
 	dVote          logTopic = "VOTE"
-	dController          logTopic = "CONT"
+	dController    logTopic = "CONT"
 )
 
 var debugStart time.Time
@@ -60,20 +60,6 @@ func Debug(topic logTopic, format string, a ...interface{}) {
 	if debugVerbosity >= 1 {
 		time := time.Since(debugStart).Microseconds()
 		time /= 100
-		prefix := fmt.Sprintf("%06d %v ", time, string(topic))
-		format = prefix + format
-		log.Printf(format, a...)
-	}
-}
-
-func Debug2(kv *ShardKV, topic logTopic, format string, a ...interface{}) {
-	if debugVerbosity >= 1 {
-		time := time.Since(debugStart).Microseconds()
-		time /= 100
-		isLeader := kv.CheckIsLeader()
-		if !isLeader && leaderOnly > 0 {
-			return
-		}
 		prefix := fmt.Sprintf("%06d %v ", time, string(topic))
 		format = prefix + format
 		log.Printf(format, a...)

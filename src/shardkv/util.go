@@ -1,7 +1,6 @@
-package raft
+package shardkv
 
 import (
-	"6.5840/shardkv"
 	"fmt"
 	"log"
 	"os"
@@ -43,7 +42,7 @@ const (
 	dTimer         logTopic = "TIMR"
 	dTrace         logTopic = "TRCE"
 	dVote          logTopic = "VOTE"
-	dWarn          logTopic = "WARN"
+	dController          logTopic = "CONT"
 )
 
 var debugStart time.Time
@@ -67,7 +66,7 @@ func Debug(topic logTopic, format string, a ...interface{}) {
 	}
 }
 
-func Debug2(kv *shardkv.ShardKV, topic logTopic, format string, a ...interface{}) {
+func Debug2(kv *ShardKV, topic logTopic, format string, a ...interface{}) {
 	if debugVerbosity >= 1 {
 		time := time.Since(debugStart).Microseconds()
 		time /= 100

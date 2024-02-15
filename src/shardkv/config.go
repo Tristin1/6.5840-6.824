@@ -110,7 +110,7 @@ func (cfg *config) ctrlername(i int) string {
 }
 
 // shard server name for labrpc.
-// i'th server of group gid.
+// i'th server of group Gid.
 func (cfg *config) servername(gid int, i int) string {
 	return "server-" + strconv.Itoa(gid) + "-" + strconv.Itoa(i)
 }
